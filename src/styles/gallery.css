@@ -45,6 +45,15 @@
   overflow: hidden;
   background: #1a1a1a;
   border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gallery-item:active,
+.gallery-item:focus,
+.gallery-thumbnail:active,
+.gallery-thumbnail:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-color);
 }
 
 .gallery-thumbnail, .gallery-thumbnail img {

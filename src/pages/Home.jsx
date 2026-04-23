@@ -9,7 +9,7 @@ function Home() {
       </div>
 
       <div className="hero">
-        <img src="/mis av assets/IMG_6188.jpg" alt="AV showcase" />
+        <img src="/mis-av-assets/IMG_6188.jpg" alt="AV showcase" />
       </div>
     </div>
   );

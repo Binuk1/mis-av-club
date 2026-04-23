@@ -5,7 +5,8 @@ const teamMembers = [
   { name: "Khor Zheng Yu", role: "Camera Director", icon: "🎥" },
   { name: "Lim Zheng Yan", role: "Lead Broadcasting", icon: "📡" },
   { name: "Tan Kee Wei", role: "Photographer", icon: "📷" },
-  { name: "Lee Yu Zheng", role: "Audio Engineer Front of House", icon: "🎧" },
+  { name: "Lee Yu Zheng", role: "FOH Audio Engineer", icon: "🎧" },
+  { name: "Joseph Phang", role: "Camera Op", icon: "�" },
 ];
 
 function Team() {

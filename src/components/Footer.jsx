@@ -40,6 +40,7 @@ function Footer() {
             <li><Link to="/about" onClick={handleNavClick}>About</Link></li>
             <li><Link to="/team" onClick={handleNavClick}>Team</Link></li>
             <li><Link to="/gallery" onClick={handleNavClick}>Gallery</Link></li>
+            <li><Link to="/contact" onClick={handleNavClick}>Contact Us</Link></li>
           </ul>
         </div>
 
@@ -52,7 +53,7 @@ function Footer() {
             </li>
             <li>
               <span className="contact-icon"><CgMail /></span>
-              iemcorp@iem.edu.my
+              <a href="mailto:avclub@iem.edu.my" className="email-link">avclub@iem.edu.my</a>
             </li>
             <li>
               <span className="contact-icon"><SlCalender /></span>

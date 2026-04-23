@@ -8,6 +8,7 @@ const navItems = [
   { path: "/about", label: "About" },
   { path: "/team", label: "Team" },
   { path: "/gallery", label: "Gallery" },
+  { path: "/contact", label: "Contact Us" },
 ];
 
 function Navbar() {
