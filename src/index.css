@@ -28,7 +28,6 @@
 ========================= */
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 body {
@@ -37,7 +36,6 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 /* =========================
@@ -106,10 +104,19 @@ textarea {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
 }
 
 .main-content {
   flex: 1;
+  padding-top: 70px;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding-top: 80px;
+  }
 }
 
 /* =========================
