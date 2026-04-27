@@ -59,7 +59,7 @@ function Contact() {
       {submitted ? (
         <div className="success-message">
           <img
-            src="/mis-av-assets/success-1.png"
+            src="https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271315/lx4zia2xhhl2yzmc53v3.png"
             alt="Message sent successfully"
             className="success-image"
             onContextMenu={(e) => e.preventDefault()}

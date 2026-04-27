@@ -110,12 +110,12 @@ textarea {
 
 .main-content {
   flex: 1;
-  padding-top: 70px;
+  padding-top: 95px;
 }
 
 @media (min-width: 768px) {
   .main-content {
-    padding-top: 80px;
+    padding-top: 90px;
   }
 }
 

@@ -9,7 +9,7 @@ function Home() {
       </div>
 
       <div className="hero">
-        <img src="/mis-av-assets/IMG_6188.jpg" alt="AV showcase" />
+        <img src="https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/tbkmfsnvzczio5skjjsq.webp" alt="AV showcase" />
       </div>
     </div>
   );

@@ -3,22 +3,22 @@ import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
 import OptimizedImage from "../components/OptimizedImage";
 import "../styles/gallery.css";
 
-// Gallery images with existing AVIF/WebP optimization
-// Using pre-converted files in public/avif assets and public/webp assets folders
+// Gallery images using Cloudinary URLs
 const galleryImages = [
-  { avif: "/avif-assets/jaypajuscmlcfornfiym.avif", webp: "/webp-assets/avefvprdw4gfvm8nuaax.webp", fallback: "/mis-av-assets/IMG_3022.jpeg", alt: "Event setup" },
-  { avif: "/avif-assets/jdqp5rcwlo9xwmfkpzsg.avif", webp: "/webp-assets/dockc0cdg8dcr5j55asm.webp", fallback: "/mis-av-assets/IMG_3024.jpeg", alt: "Live broadcast" },
-  { avif: "/avif-assets/kgl6yf6b0ktucjiigrlq.avif", webp: "/webp-assets/egn2jo6h6doljpec4xi3.webp", fallback: "/mis-av-assets/IMG_3044.jpeg", alt: "Behind the scenes" },
-  { avif: "/avif-assets/kirtffdddmbgdshbiuqo.avif", webp: "/webp-assets/enr7huitkz5mjobqd1qy.webp", fallback: "/mis-av-assets/IMG_3046.jpeg", alt: "Crew working" },
-  { avif: "/avif-assets/mnhzsvllsxi2dpkofjca.avif", webp: "/webp-assets/gjcf1u3ohd3lsfbyowbo.webp", fallback: "/mis-av-assets/IMG_3048.jpeg", alt: "Equipment setup" },
-  { avif: "/avif-assets/rhfpsiqubrp11k1vhsvo.avif", webp: "/webp-assets/j1iy3ctaizbacj5ityu2.webp", fallback: "/mis-av-assets/IMG_3055.jpeg", alt: "Production" },
-  { avif: "/avif-assets/rvpqlu5thqqhddyiya3o.avif", webp: "/webp-assets/n36uithr2rueuwmhbmin.webp", fallback: "/mis-av-assets/IMG_3480.jpg", alt: "Team at work" },
-  { avif: "/avif-assets/s1ecx0wdcbg11j2ayd8m.avif", webp: "/webp-assets/qu2cewmmohupgncxqi59.webp", fallback: "/mis-av-assets/IMG_3481.jpg", alt: "Camera operation" },
-  { avif: "/avif-assets/tnfei79qcdwkv9l7rsng.avif", webp: "/webp-assets/sqddjq9tca3v9toidduj.webp", fallback: "/mis-av-assets/IMG_3485.jpg", alt: "Live event" },
-  { avif: "/avif-assets/twshdmnoacrcsfmnnm47.avif", webp: "/webp-assets/tc7ese3vvyiseeqetfe5.webp", fallback: "/mis-av-assets/IMG_3526.jpg", alt: "Broadcasting" },
-  { avif: "/avif-assets/uqxxio0b5lxnltolpu4s.avif", webp: "/webp-assets/wfgsdtk1wlswetaohqga.webp", fallback: "/mis-av-assets/IMG_6314.jpg", alt: "Audio setup" },
-  { avif: "/avif-assets/vjwy3ibcqhwkvwavgffz.avif", webp: "/webp-assets/xprttabjiv2vgkbavfk6.webp", fallback: "/mis-av-assets/IMG_6317.jpg", alt: "Technical director" },
-  { avif: "/avif-assets/xmiqngjdami4uqrxeiy5.avif", webp: "/webp-assets/y7psik3wybc3h7by3idc.webp", fallback: "/mis-av-assets/IMG_6331.jpg", alt: "AV Club in action" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271306/oxgqzv9ib3qbjqrqnjmn.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271306/oxgqzv9ib3qbjqrqnjmn.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271306/oxgqzv9ib3qbjqrqnjmn.webp", alt: "Event setup" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271306/r7ihoewv2x80juxmcwox.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271306/r7ihoewv2x80juxmcwox.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271306/r7ihoewv2x80juxmcwox.webp", alt: "Live broadcast" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/og6hcdhc2wetvf6xbbf2.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/og6hcdhc2wetvf6xbbf2.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/og6hcdhc2wetvf6xbbf2.webp", alt: "Behind the scenes" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/o71uwcrthx4an5ctagj4.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/o71uwcrthx4an5ctagj4.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/o71uwcrthx4an5ctagj4.webp", alt: "Crew working" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/pormwoaiif1vlkhyutpw.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/pormwoaiif1vlkhyutpw.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/pormwoaiif1vlkhyutpw.webp", alt: "Equipment setup" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/oxzbstqnddn2v9muze28.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/oxzbstqnddn2v9muze28.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/oxzbstqnddn2v9muze28.webp", alt: "Production" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/o1s5jboqthd3mx96ttef.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/o1s5jboqthd3mx96ttef.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271305/o1s5jboqthd3mx96ttef.webp", alt: "Team at work" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/ybjvxt5v8rppnzgsn3w9.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/ybjvxt5v8rppnzgsn3w9.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/ybjvxt5v8rppnzgsn3w9.webp", alt: "Camera operation" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/xiud0kohxpcmrmxunvrr.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/xiud0kohxpcmrmxunvrr.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/xiud0kohxpcmrmxunvrr.webp", alt: "Live event" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/cdil4vmbzt6ltmdccg3m.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/cdil4vmbzt6ltmdccg3m.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/cdil4vmbzt6ltmdccg3m.webp", alt: "Broadcasting" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/p5vmppoz7bath2i1gbc7.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/p5vmppoz7bath2i1gbc7.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/p5vmppoz7bath2i1gbc7.webp", alt: "Audio setup" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271303/hicilcgp3ce0jad7asxl.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271303/hicilcgp3ce0jad7asxl.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271303/hicilcgp3ce0jad7asxl.webp", alt: "Technical director" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271303/fdx2mxigo1fpezxx6i7t.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271303/fdx2mxigo1fpezxx6i7t.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271303/fdx2mxigo1fpezxx6i7t.webp", alt: "AV Club in action" },
+  { avif: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/tbkmfsnvzczio5skjjsq.webp", webp: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/tbkmfsnvzczio5skjjsq.webp", fallback: "https://res.cloudinary.com/dqptpxh4r/image/upload/v1777271304/tbkmfsnvzczio5skjjsq.webp", alt: "Showcase" },
 ];
 
 function Gallery() {
