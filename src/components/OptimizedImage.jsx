@@ -13,13 +13,13 @@ function OptimizedImage({ avifSrc, webpSrc, fallbackSrc, alt, className, onClick
   return (
     <div className={`optimized-image-container ${loaded ? 'loaded' : ''}`}>
       {!loaded && <div className="skeleton-loader" />}
-      <picture className={`blur-picture ${loaded ? 'loaded' : ''}`}>
+      <picture>
         <source srcSet={avifSrc} type="image/avif" />
         <source srcSet={webpSrc} type="image/webp" />
         <img
           src={fallbackSrc}
           alt={alt}
-          className={`${className} ${loaded ? 'loaded' : 'loading blur-image'}`}
+          className={className}
           loading={priority ? 'eager' : 'lazy'}
           decoding={priority ? 'sync' : 'async'}
           onClick={onClick}

@@ -22,61 +22,69 @@
         align-items: center;
         justify-content: center;
         z-index: 99999;
-        gap: 20px;
-        transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        gap: 24px;
+        transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
       }
       #splash-screen.fade-out {
         opacity: 0;
         visibility: hidden;
+        pointer-events: none;
       }
       #splash-screen img {
-        height: 120px;
-        animation: splashPulse 0.6s ease-out;
+        height: 100px;
+        opacity: 0;
+        animation: fadeIn 0.3s ease-out forwards;
       }
       #splash-screen h2 {
         color: white;
         font-family: 'Montserrat', sans-serif;
-        font-size: 1.8rem;
-        font-weight: 900;
+        font-size: 1.6rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
         margin: 0;
-        animation: textGlow 3s ease-in-out infinite;
+        opacity: 0;
+        animation: fadeIn 0.3s ease-out 0.1s forwards;
       }
       #splash-loader {
-        width: 200px;
-        height: 3px;
-        background: #333;
-        border-radius: 2px;
+        width: 180px;
+        height: 2px;
+        background: #2a2a2a;
+        border-radius: 1px;
         overflow: hidden;
-        margin-top: 10px;
+        margin-top: 8px;
+        opacity: 0;
+        animation: fadeIn 0.3s ease-out 0.2s forwards;
       }
       #splash-loader-bar {
         height: 100%;
         background: #646cff;
-        border-radius: 2px;
-        animation: loadProgress 2.5s ease-out forwards;
+        border-radius: 1px;
+        width: 0%;
+        transition: width 0.1s linear;
       }
-      @keyframes splashPulse {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
+      #splash-status {
+        color: #888;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-top: 4px;
+        opacity: 0;
+        animation: fadeIn 0.3s ease-out 0.3s forwards;
       }
-      @keyframes textGlow {
-        0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-        50% { opacity: 0.7; text-shadow: 0 0 30px rgba(255,255,255,0.6); }
-      }
-      @keyframes loadProgress {
-        from { width: 0%; }
-        to { width: 100%; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
       }
       @media (max-width: 480px) {
-        #splash-screen img { height: 90px; }
-        #splash-screen h2 { font-size: 1.4rem; letter-spacing: 2px; }
-        #splash-loader { width: 160px; }
+        #splash-screen img { height: 80px; }
+        #splash-screen h2 { font-size: 1.3rem; letter-spacing: 1.5px; }
+        #splash-loader { width: 140px; }
       }
       #root {
         opacity: 0;
-        transition: opacity 0.5s ease;
+        transition: opacity 0.4s ease;
       }
     </style>
   </head>
@@ -87,25 +95,102 @@
       <div id="splash-loader">
         <div id="splash-loader-bar"></div>
       </div>
+      <div id="splash-status">Loading...</div>
     </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
-      // Keep splash screen for 4.5s then fade out and show React app
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          var splash = document.getElementById('splash-screen');
-          var root = document.getElementById('root');
-          if (splash) {
-            splash.classList.add('fade-out');
-            // Make root visible after splash fades
-            if (root) root.style.opacity = '1';
-            setTimeout(function() {
-              if (splash) splash.style.display = 'none';
-            }, 500);
+      // Accurate loading progress
+      (function() {
+        var splash = document.getElementById('splash-screen');
+        var loaderBar = document.getElementById('splash-loader-bar');
+        var status = document.getElementById('splash-status');
+        var root = document.getElementById('root');
+        var progress = 0;
+        var resourcesLoaded = 0;
+        var totalResources = 0;
+        var minDisplayTime = 1000; // Minimum time to show splash (prevents flash)
+        var startTime = Date.now();
+
+        function updateProgress() {
+          loaderBar.style.width = progress + '%';
+        }
+
+        function hideSplash() {
+          var elapsed = Date.now() - startTime;
+          var remaining = Math.max(0, minDisplayTime - elapsed);
+          
+          setTimeout(function() {
+            if (splash) {
+              splash.classList.add('fade-out');
+              if (root) root.style.opacity = '1';
+              setTimeout(function() {
+                if (splash) splash.style.display = 'none';
+              }, 400);
+            }
+          }, remaining);
+        }
+
+        // Monitor resource loading
+        var observer = new PerformanceObserver(function(list) {
+          var entries = list.getEntries();
+          resourcesLoaded += entries.length;
+          // Estimate progress based on resource loading
+          progress = Math.min(90, (resourcesLoaded / Math.max(resourcesLoaded + 5, 20)) * 100);
+          updateProgress();
+        });
+
+        try {
+          observer.observe({ entryTypes: ['resource'] });
+        } catch(e) {
+          // Fallback if PerformanceObserver not supported
+          progress = 50;
+          updateProgress();
+        }
+
+        // Update status text
+        var statusMessages = ['Loading...', 'Fetching resources...', 'Preparing...', 'Almost ready...'];
+        var statusIndex = 0;
+        var statusInterval = setInterval(function() {
+          if (progress >= 100 || !splash || splash.classList.contains('fade-out')) {
+            clearInterval(statusInterval);
+            return;
           }
-        }, 2500);
-      });
+          statusIndex = (statusIndex + 1) % statusMessages.length;
+          status.textContent = statusMessages[statusIndex];
+        }, 600);
+
+        // Smooth progress animation
+        var progressInterval = setInterval(function() {
+          if (progress < 90) {
+            progress += 1;
+            updateProgress();
+          }
+        }, 30);
+
+        // When everything is loaded
+        window.addEventListener('load', function() {
+          clearInterval(progressInterval);
+          progress = 100;
+          updateProgress();
+          status.textContent = 'Ready!';
+          
+          try {
+            observer.disconnect();
+          } catch(e) {}
+          
+          hideSplash();
+        });
+
+        // Fallback: hide after 5 seconds max (in case of stuck resources)
+        setTimeout(function() {
+          if (splash && !splash.classList.contains('fade-out')) {
+            progress = 100;
+            updateProgress();
+            hideSplash();
+          }
+        }, 5000);
+      })();
 
       // Console warning and developer message
       console.log('%c⚠️ WARNING', 'color: #ff6b6b; font-size: 20px; font-weight: bold;');

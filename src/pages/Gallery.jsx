@@ -104,7 +104,7 @@ function Gallery() {
               alt={image.alt}
               className="gallery-thumbnail"
               onClick={() => openLightbox(index)}
-              priority={index < 4}
+              priority={true}
             />
           </div>
         ))}

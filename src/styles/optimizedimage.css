@@ -18,38 +18,10 @@
   transition: opacity 0.2s ease;
 }
 
-/* Instant load for cached images - no fade animation */
-.optimized-image-container.loaded img {
-  transition: none;
-}
-
-.optimized-image-container img.loading {
-  opacity: 0;
-}
-
-.optimized-image-container img.loaded {
+/* Images load instantly - no artificial delays */
+.optimized-image-container img {
   opacity: 1;
-}
-
-/* Blur loading effect */
-.blur-picture {
-  filter: blur(20px);
-  transition: filter 0.5s ease;
-}
-
-.blur-picture.loaded {
-  filter: blur(0);
-}
-
-.blur-image {
-  filter: blur(20px);
-  transform: scale(1.1);
-  transition: filter 0.5s ease, transform 0.5s ease, opacity 0.3s ease;
-}
-
-.blur-image.loaded {
-  filter: blur(0);
-  transform: scale(1);
+  transition: none;
 }
 
 .skeleton-loader {

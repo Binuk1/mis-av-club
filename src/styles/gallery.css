@@ -38,7 +38,7 @@
   }
 }
 
-/* Gallery Items */
+/* Gallery Items - GPU Accelerated */
 .gallery-item {
   position: relative;
   aspect-ratio: 1 / 1;
@@ -46,6 +46,12 @@
   background: #1a1a1a;
   border-radius: 8px;
   -webkit-tap-highlight-color: transparent;
+  /* GPU Acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+  contain: layout paint;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .gallery-item:active,
@@ -60,33 +66,26 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: transform 0.3s ease;
   cursor: pointer;
-  opacity: 0;
-}
-
-.gallery-thumbnail.loaded, .gallery-thumbnail.loaded img {
-  opacity: 1;
-}
-
-.gallery-thumbnail.loading, .gallery-thumbnail.loading img {
-  opacity: 0;
+  /* GPU Acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .gallery-thumbnail.loaded:hover, .gallery-thumbnail.loaded:hover img {
-  transform: scale(1.02);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
-  border: 2px solid var(--accent-color);
+  transform: scale(1.02) translateZ(0);
 }
 
 @media (min-width: 768px) {
   .gallery-thumbnail.loaded:hover, .gallery-thumbnail.loaded:hover img {
-    transform: scale(1.03);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+    transform: scale(1.03) translateZ(0);
   }
 }
 
-/* Lightbox Styles */
+/* Lightbox Styles - GPU Accelerated */
 .lightbox-overlay {
   position: fixed;
   top: 0;
@@ -98,7 +97,12 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease;
+  /* GPU Acceleration */
+  transform: translateZ(0);
+  will-change: opacity;
+  contain: layout paint;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @keyframes fadeIn {
@@ -120,12 +124,17 @@
   max-height: 85vh;
   object-fit: contain;
   border-radius: 8px;
+  /* GPU Acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .lightbox-arrow {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateZ(0);
   background: rgba(255, 255, 255, 0.1);
   border: none;
   color: white;
@@ -139,6 +148,10 @@
   font-size: 1.5rem;
   transition: background 0.3s ease;
   z-index: 1001;
+  /* GPU Acceleration */
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .lightbox-arrow:hover {
@@ -170,6 +183,11 @@
   font-size: 1.5rem;
   transition: background 0.3s ease;
   z-index: 1001;
+  /* GPU Acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .lightbox-close:hover {
