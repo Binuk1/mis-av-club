@@ -39,15 +39,17 @@ function Gallery() {
 
   const goToPrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
-  }, []);
+  }, [galleryImages.length]);
 
   const goToNext = useCallback(() => {
     setCurrentIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
-  }, []);
+  }, [galleryImages.length]);
 
+  // Keyboard event listener
   useEffect(() => {
+    if (!lightboxOpen) return;
+    
     const handleKeyDown = (e) => {
-      if (!lightboxOpen) return;
       if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowLeft") goToPrevious();
       if (e.key === "ArrowRight") goToNext();
@@ -57,6 +59,7 @@ function Gallery() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxOpen, goToPrevious, goToNext]);
 
+  // Body scroll lock
   useEffect(() => {
     if (lightboxOpen) {
       document.body.style.overflow = "hidden";
@@ -70,15 +73,18 @@ function Gallery() {
 
   // Touch handlers for swipe gestures
   const onTouchStart = (e) => {
+    if (!lightboxOpen) return;
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const onTouchMove = (e) => {
+    if (!lightboxOpen) return;
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const onTouchEnd = () => {
+    if (!lightboxOpen) return;
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
@@ -104,7 +110,7 @@ function Gallery() {
               alt={image.alt}
               className="gallery-thumbnail"
               onClick={() => openLightbox(index)}
-              priority={true}
+              index={index}
             />
           </div>
         ))}
@@ -133,7 +139,7 @@ function Gallery() {
               fallbackSrc={galleryImages[currentIndex].fallback}
               alt={galleryImages[currentIndex].alt}
               className="lightbox-image"
-              priority
+              index={0}
             />
 
             <button className="lightbox-arrow lightbox-next" onClick={goToNext} aria-label="Next image">

@@ -1,18 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/optimizedimage.css';
 
-// Global cache to track loaded images across the app
-const loadedImageCache = new Set();
+function OptimizedImage({ avifSrc, webpSrc, fallbackSrc, alt, className, onClick, index = 0 }) {
+  const [loaded, setLoaded] = useState(false);
 
-function OptimizedImage({ avifSrc, webpSrc, fallbackSrc, alt, className, onClick, priority = false }) {
-  // Check if image was already loaded in this session or stored in localStorage
-  const imageKey = fallbackSrc;
-  const wasPreviouslyLoaded = loadedImageCache.has(imageKey) || localStorage.getItem(`img_${imageKey}`);
-  const [loaded, setLoaded] = useState(wasPreviouslyLoaded || false);
+  // Check if image is already in browser cache
+  useEffect(() => {
+    const img = new Image();
+    img.src = fallbackSrc;
+    if (img.complete) {
+      setLoaded(true);
+    }
+  }, [fallbackSrc]);
+
+  // Priority for first 6 images (parallel loading)
+  const fetchPriority = index < 6 ? "high" : "auto";
 
   return (
     <div className={`optimized-image-container ${loaded ? 'loaded' : ''}`}>
-      {!loaded && <div className="skeleton-loader" />}
+      {!loaded && <div className="skeleton-loader" aria-hidden="true" />}
       <picture>
         <source srcSet={avifSrc} type="image/avif" />
         <source srcSet={webpSrc} type="image/webp" />
@@ -20,14 +26,11 @@ function OptimizedImage({ avifSrc, webpSrc, fallbackSrc, alt, className, onClick
           src={fallbackSrc}
           alt={alt}
           className={className}
-          loading={priority ? 'eager' : 'lazy'}
-          decoding={priority ? 'sync' : 'async'}
           onClick={onClick}
-          onLoad={() => {
-            setLoaded(true);
-            loadedImageCache.add(imageKey);
-            localStorage.setItem(`img_${imageKey}`, 'true');
-          }}
+          loading="eager"
+          fetchPriority={fetchPriority}
+          onLoad={() => setLoaded(true)}
+          onError={() => setLoaded(true)}
         />
       </picture>
     </div>
